@@ -1,0 +1,22 @@
+{
+  "name": "¿Cerré con llave?",
+  "short_name": "Lock Logger",
+  "description": "Registra fácilmente si cerraste con llave tu casa, auto, oficina y más.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fafafa",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Cerré con llave?</title>
+    <!-- Manifest for installability -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <!-- Theme colors for light/dark modes will be set dynamically via JS -->
+    <meta name="theme-color" content="#0ea5e9" />
+    <!-- Basic styles -->
+    <style>
+      :root {
+        --primary: #0ea5e9;
+        --bg-light: #fafafa;
+        --bg-dark: #18181b;
+        --text-light: #18181b;
+        --text-dark: #e4e4e7;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+          Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-light);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .lockables {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .lockable-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        cursor: pointer;
+        color: white;
+        transition: transform 0.1s ease;
+      }
+      .lockable-button:active {
+        transform: scale(0.97);
+      }
+      .fab {
+        position: fixed;
+        right: 1rem;
+        bottom: 1.5rem;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--primary);
+        color: white;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+      .history {
+        margin-top: 1.5rem;
+      }
+      .history-entry {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      body.dark .history-entry {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+      }
+      .controls {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .controls button {
+        flex: 1 1 calc(50% - 0.5rem);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        background-color: var(--primary);
+        color: white;
+        font-size: 0.875rem;
+      }
+      .controls input[type="file"] {
+        display: none;
+      }
+      .search-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .stats {
+        margin-top: 1rem;
+      }
+      .bar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        height: 100px;
+        margin-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+      }
+      .bar {
+        width: 12%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .bar-label {
+        margin-top: 0.25rem;
+        font-size: 0.7rem;
+      }
+      .theme-toggle {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+      .theme-toggle select {
+        flex: 1;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- React and ReactDOM from CDN for simplicity -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- The main application logic -->
+    <script src="./main.js"></script>
+  </body>
+</html>
