@@ -126,13 +126,47 @@
      * Add a new lockable via prompts (emoji, name, color).
      */
     function addLockable() {
+      // Ask for the basic fields using prompts. The color prompt now offers
+      // pre‑defined options with coloured emoji so users don't need to know hex codes.
       const name = window.prompt('Nombre del elemento (ej. Departamento, Bici):');
       if (!name) return;
       const icon = window.prompt('Emoji para el elemento (ej. 🏠):', '🔒');
       if (!icon) return;
-      const color = window.prompt('Color en hex (ej. #0ea5e9):', '#0ea5e9');
+      // Define a palette of common colours. Each entry maps a numeric choice to
+      // an object with a hex value and a user‑friendly description. Coloured
+      // emojis are used here so the user can see roughly what each colour
+      // represents without memorising hex codes.
+      const palette = {
+        // Green
+        '1': { hex: '#16a34a', label: '🟢 Verde' },
+        // Blue
+        '2': { hex: '#0ea5e9', label: '🔵 Azul' },
+        // Pink
+        '3': { hex: '#ec4899', label: '💗 Rosa' },
+        // Orange
+        '4': { hex: '#f59e0b', label: '🟠 Naranja' },
+        // Red
+        '5': { hex: '#ef4444', label: '🔴 Rojo' },
+        // Yellow
+        '6': { hex: '#eab308', label: '🟡 Amarillo' },
+        // Purple
+        '7': { hex: '#8b5cf6', label: '🟣 Violeta' },
+        // Grey
+        '8': { hex: '#6b7280', label: '⚪ Gris' },
+        // Black
+        '9': { hex: '#000000', label: '⬛ Negro' },
+        // White
+        '0': { hex: '#ffffff', label: '⬜ Blanco' },
+      };
+      // Build a message listing all options for the prompt
+      let msg = 'Elige un color para el botón ingresando el número correspondiente:\n';
+      Object.keys(palette).forEach((key) => {
+        msg += `${key}. ${palette[key].label}\n`;
+      });
+      const colourChoice = window.prompt(msg, '1');
+      const colour = palette[colourChoice]?.hex || palette['1'].hex;
       const id = uid();
-      const newLockable = { id, name, icon, color };
+      const newLockable = { id, name, icon, color: colour };
       setState((prev) => ({
         ...prev,
         lockables: [...prev.lockables, newLockable],
@@ -374,11 +408,13 @@
               'button',
               {
                 className: 'lockable-button',
-                style: {
-                  backgroundColor: lock.color,
-                  color: readableTextColor(lock.color),
-                  flex: '1 1 auto',
-                },
+        style: {
+          backgroundColor: lock.color,
+          color: readableTextColor(lock.color),
+          // Apply a subtle text shadow to improve contrast on light backgrounds.
+          textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+          flex: '1 1 auto',
+        },
                 onClick: () => recordEntry(lock),
               },
               `${lock.icon}  ${lock.name}`
