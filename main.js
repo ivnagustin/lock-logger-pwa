@@ -327,10 +327,13 @@
       { className: 'container' },
       // Title
       React.createElement('h1', null, '¿Cerré con llave?'),
-      // Theme selector
+      // Theme selector (hidden)
       React.createElement(
         'div',
-        { className: 'theme-toggle' },
+        {
+          className: 'theme-toggle',
+          style: { display: 'none' },
+        },
         React.createElement('label', null, 'Tema:'),
         React.createElement(
           'select',
@@ -363,17 +366,8 @@
           )
         )
       ),
-      // Floating add button
-      React.createElement(
-        'button',
-        {
-          className: 'fab',
-          onClick: addLockable,
-          title: 'Agregar elemento',
-        },
-        '+'
-      ),
-      // Controls: undo, export, import, share
+      // Floating add button removed (replaced by control bar add button)
+      // Controls: undo and add item (export/import/share removed)
       React.createElement(
         'div',
         { className: 'controls' },
@@ -386,73 +380,17 @@
           },
           'Deshacer'
         ),
+        // Add new lockable button
         React.createElement(
           'button',
-          { onClick: exportData },
-          'Exportar'
-        ),
-        React.createElement(
-          'label',
-          { style: { flex: '1 1 calc(50% - 0.5rem)' } },
-          React.createElement('input', {
-            type: 'file',
-            accept: 'application/json',
-            onChange: importData,
-          }),
-          React.createElement(
-            'span',
-            {
-              style: {
-                display: 'inline-block',
-                width: '100%',
-                padding: '0.5rem',
-                borderRadius: '0.5rem',
-                backgroundColor: 'var(--primary)',
-                color: 'white',
-                textAlign: 'center',
-                cursor: 'pointer',
-              },
-            },
-            'Importar'
-          )
-        ),
-        React.createElement(
-          'button',
-          { onClick: shareLast },
-          'Compartir'
+          {
+            onClick: addLockable,
+            title: 'Agregar elemento',
+          },
+          '+'
         )
       ),
-      // Stats section
-      React.createElement(
-        'div',
-        { className: 'stats' },
-        React.createElement('h2', null, `Racha: ${streak} día${streak === 1 ? '' : 's'}`),
-        React.createElement(
-          'div',
-          { className: 'bar-container' },
-          last7.map((d) =>
-            React.createElement(
-              'div',
-              { key: d.label, className: 'bar' },
-              React.createElement('div', {
-                style: {
-                  height: `${d.count * 20}px`,
-                  width: '100%',
-                  backgroundColor: 'var(--primary)',
-                  borderRadius: '0.25rem 0.25rem 0 0',
-                  transition: 'height 0.3s ease',
-                },
-              }),
-              React.createElement(
-                'div',
-                { className: 'bar-label' },
-                d.label
-              )
-            )
-          )
-        )
-      ),
-      // History search and list
+      // History search and list (moved above stats)
       React.createElement(
         'div',
         { className: 'history' },
@@ -483,6 +421,36 @@
                   : null
               );
             })
+      ),
+      // Stats section (moved below history)
+      React.createElement(
+        'div',
+        { className: 'stats' },
+        React.createElement('h2', null, `Racha: ${streak} día${streak === 1 ? '' : 's'}`),
+        React.createElement(
+          'div',
+          { className: 'bar-container' },
+          last7.map((d) =>
+            React.createElement(
+              'div',
+              { key: d.label, className: 'bar' },
+              React.createElement('div', {
+                style: {
+                  height: `${d.count * 20}px`,
+                  width: '100%',
+                  backgroundColor: 'var(--primary)',
+                  borderRadius: '0.25rem 0.25rem 0 0',
+                  transition: 'height 0.3s ease',
+                },
+              }),
+              React.createElement(
+                'div',
+                { className: 'bar-label' },
+                d.label
+              )
+            )
+          )
+        )
       )
     );
   }
