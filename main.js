@@ -140,6 +140,17 @@
     }
 
     /**
+     * Remove a lockable by id along with its entries.
+     */
+    function removeLockable(id) {
+      setState((prev) => {
+        const nextLockables = prev.lockables.filter((l) => l.id !== id);
+        const nextEntries = prev.entries.filter((e) => e.lockableId !== id);
+        return { ...prev, lockables: nextLockables, entries: nextEntries };
+      });
+    }
+
+    /**
      * Undo the most recent entry.
      */
     function undoLast() {
@@ -346,23 +357,48 @@
           React.createElement('option', { value: 'dark' }, 'Oscuro')
         )
       ),
-      // Lockables buttons
+      // Lockables buttons with delete option
       React.createElement(
         'div',
         { className: 'lockables' },
         state.lockables.map((lock) =>
           React.createElement(
-            'button',
+            'div',
             {
               key: lock.id,
-              className: 'lockable-button',
-              style: {
-                backgroundColor: lock.color,
-                color: readableTextColor(lock.color),
-              },
-              onClick: () => recordEntry(lock),
+              className: 'lockable-item',
+              style: { display: 'flex', alignItems: 'center', gap: '0.5rem' },
             },
-            `${lock.icon}  ${lock.name}`
+            // Main lockable button
+            React.createElement(
+              'button',
+              {
+                className: 'lockable-button',
+                style: {
+                  backgroundColor: lock.color,
+                  color: readableTextColor(lock.color),
+                  flex: '1 1 auto',
+                },
+                onClick: () => recordEntry(lock),
+              },
+              `${lock.icon}  ${lock.name}`
+            ),
+            // Delete button
+            React.createElement(
+              'button',
+              {
+                className: 'delete-lockable',
+                onClick: () => removeLockable(lock.id),
+                title: `Eliminar ${lock.name}`,
+                style: {
+                  padding: '0.25rem 0.5rem',
+                  backgroundColor: '#ef4444',
+                  color: 'white',
+                  borderRadius: '0.25rem',
+                },
+              },
+              '×'
+            )
           )
         )
       ),
